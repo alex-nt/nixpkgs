@@ -37,12 +37,12 @@
 
       checks.x86_64-linux.tarball = jobs.tarball;
 
-      htmlDocs = {
-        nixpkgsManual = jobs.manual;
-        nixosManual = (import ./nixos/release-small.nix {
-          nixpkgs = self;
-        }).nixos.manual.x86_64-linux;
-      };
+      # htmlDocs = {
+      #   nixpkgsManual = jobs.manual;
+      #   nixosManual = (import ./nixos/release-small.nix {
+      #     nixpkgs = self;
+      #   }).nixos.manual.x86_64-linux;
+      # };
 
       # The "legacy" in `legacyPackages` doesn't imply that the packages exposed
       # through this attribute are "legacy" packages. Instead, `legacyPackages`
