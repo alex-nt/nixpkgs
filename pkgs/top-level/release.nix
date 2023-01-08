@@ -93,7 +93,7 @@ let
           constituents =
             [ jobs.tarball
               jobs.metrics
-              # jobs.manual
+              jobs.manual
               jobs.lib-tests
               jobs.pkgs-lib-tests
               jobs.stdenv.x86_64-linux
