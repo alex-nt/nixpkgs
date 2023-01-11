@@ -1,22 +1,21 @@
-{ lib, stdenv, buildPackages, fetchurl, perl, buildLinux, nixosTests, modDirVersionArg ? null, ... } @ args:
+{ lib, buildPackages, fetchurl, perl, buildLinux, nixosTests, modDirVersionArg ? null, ... } @ args:
 
 with lib;
 
-lib.overrideDerivation
-  (buildLinux (args // rec {
-    version = "6.0.10";
+lib.overrideDerivation (buildLinux (args // rec {
+  version = "6.0.10";
 
-    # modDirVersion needs to be x.y.z, will automatically add .0 if needed
-    modDirVersion = if (modDirVersionArg == null) then concatStringsSep "." (take 3 (splitVersion "${version}.0")) else modDirVersionArg;
+  # modDirVersion needs to be x.y.z, will automatically add .0 if needed
+  modDirVersion = if (modDirVersionArg == null) then concatStringsSep "." (take 3 (splitVersion "${version}.0")) else modDirVersionArg;
 
-    # branchVersion needs to be x.y
-    extraMeta.branch = versions.majorMinor version;
+  # branchVersion needs to be x.y
+  extraMeta.branch = versions.majorMinor version;
 
-    src = fetchurl {
-      url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-      sha256 = "1l0xak4w7c16cg8lhracy8r18zzdl0x5s654w6ivyw6dhk6pzr9r";
-    };
-  } // (args.argsOverride or { })))
+  src = fetchurl {
+    url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+    sha256 = "1l0xak4w7c16cg8lhracy8r18zzdl0x5s654w6ivyw6dhk6pzr9r";
+  };
+} // (args.argsOverride or { })))
   (oldAttrs: {
     postConfigure = ''
       # The v7 defconfig has this set to '-v7' which screws up our modDirVersion.
@@ -45,7 +44,6 @@ lib.overrideDerivation
     '' + lib.optionalString (lib.elem stdenv.hostPlatform.system [ "armv7l-linux" ]) ''
       copyDTB bcm2709-rpi-2-b.dtb bcm2836-rpi-2-b.dtb
     '' + lib.optionalString (lib.elem stdenv.hostPlatform.system [ "armv7l-linux" "aarch64-linux" ]) ''
-      copyDTB bcm2710-rpi-zero-2.dtb bcm2837-rpi-zero-2.dtb
       copyDTB bcm2710-rpi-zero-2-w.dtb bcm2837-rpi-zero-2-w.dtb
       copyDTB bcm2710-rpi-3-b.dtb bcm2837-rpi-3-b.dtb
       copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-a-plus.dtb
@@ -54,3 +52,4 @@ lib.overrideDerivation
       copyDTB bcm2711-rpi-4-b.dtb bcm2838-rpi-4-b.dtb
     '';
   })
+
