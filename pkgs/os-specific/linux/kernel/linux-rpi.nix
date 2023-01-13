@@ -13,7 +13,7 @@ lib.overrideDerivation (buildLinux (args // {
     owner = "raspberrypi";
     repo = "linux";
     rev = tag;
-    hash = "sha256-Rs9cXYDCIXFRLcgmz+PLVloGYXUaNmyUVsCy2BW5R6k=";;
+    hash = "sha256-Rs9cXYDCIXFRLcgmz+PLVloGYXUaNmyUVsCy2BW5R6k=";
   };
 
   defconfig = {
