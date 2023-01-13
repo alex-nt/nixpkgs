@@ -2,22 +2,22 @@
 
 stdenvNoCC.mkDerivation {
   pname = "raspberrypi-wireless-firmware";
-  version = "2021-12-06";
+  version = "2022-12-19";
 
   srcs = [
     (fetchFromGitHub {
       name = "bluez-firmware";
       owner = "RPi-Distro";
       repo = "bluez-firmware";
-      rev = "e7fd166981ab4bb9a36c2d1500205a078a35714d";
-      hash = "sha256-6xBdXwAGA1N42k1KKYrEgtsxtFAtrwhKdIrYY39Fb7Y=";
+      rev = "dd840d991939f5046959b8c564596c7228f9d41d";
+      hash = "sha256-lYaXNLuIMa3oRg5toEGAX8uWqZQWz2tXn+Qq4GoE4Cc=";
     })
     (fetchFromGitHub {
       name = "firmware-nonfree";
       owner = "RPi-Distro";
       repo = "firmware-nonfree";
-      rev = "99d5c588e95ec9c9b86d7e88d3cf85b4f729d2bc";
-      hash = "sha256-xg6fYQvg7t2ikyLI8/XfpiNaNTf7CNFQlAzpTldTz10=";
+      rev = "8295cb71155909480d427d5dbdb230fac593e84d";
+      hash = "sha256-Vqr3LPrYIxJmKE8sT0mH25Ee8+sKnrG2kzCKZwAAugQ=";
     })
   ];
 

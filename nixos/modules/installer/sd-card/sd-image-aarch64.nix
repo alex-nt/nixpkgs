@@ -64,6 +64,10 @@
         # Add the config
         cp ${configTxt} firmware/config.txt
 
+        # Add piZero2 specific files
+        cp ${pkgs.raspberrypifw}/share/raspberrypi/boot/bcm2710-rpi-zero-2.dtb firmware/
+        cp ${pkgs.raspberrypifw}/share/raspberrypi/boot/bcm2710-rpi-zero-2-w.dtb firmware/
+
         # Add pi3 specific files
         cp ${pkgs.ubootRaspberryPi3_64bit}/u-boot.bin firmware/u-boot-rpi3.bin
 
