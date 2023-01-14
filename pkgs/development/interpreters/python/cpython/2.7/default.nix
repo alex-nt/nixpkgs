@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, fetchpatch
+{ lib, stdenv, fetchFromGitHub, fetchpatch
 , bzip2
 , expat
 , libffi
@@ -79,8 +79,12 @@ let
 
   version = with sourceVersion; "${major}.${minor}.${patch}${suffix}";
 
-  src = fetchurl {
-    url = with sourceVersion; "https://www.python.org/ftp/python/${major}.${minor}.${patch}/Python-${version}.tar.xz";
+  # ActiveState is a fork of cpython that includes fixes for security
+  # issues after its EOL
+  src = fetchFromGitHub {
+    owner = "ActiveState";
+    repo = "cpython";
+    rev = "v${version}";
     inherit sha256;
   };
 
@@ -118,13 +122,6 @@ let
 
       # Backport from CPython 3.8 of a good list of tests to run for PGO.
       ./profile-task.patch
-
-      # Patch is likely to go away in the next release (if there is any)
-      ./CVE-2019-20907.patch
-
-      ./CVE-2021-3177.patch
-
-      ./CVE-2021-23336.patch
 
       # The workaround is for unittests on Win64, which we don't support.
       # It does break aarch64-darwin, which we do support. See:
@@ -190,11 +187,10 @@ let
     "--enable-shared"
   ] ++ [
     "--with-threads"
-    "--enable-unicode=ucs${toString ucsEncoding}"
-  ] ++ optionals (stdenv.hostPlatform.isCygwin || stdenv.hostPlatform.isAarch64) [
     "--with-system-ffi"
-  ] ++ optionals stdenv.hostPlatform.isCygwin [
     "--with-system-expat"
+    "--enable-unicode=ucs${toString ucsEncoding}"
+  ] ++ optionals stdenv.hostPlatform.isCygwin [
     "ac_cv_func_bind_textdomain_codeset=yes"
   ] ++ optionals stdenv.isDarwin [
     "--disable-toolbox-glue"
@@ -229,10 +225,7 @@ let
   strictDeps = true;
   buildInputs =
     optional (stdenv ? cc && stdenv.cc.libc != null) stdenv.cc.libc ++
-    [ bzip2 openssl zlib ]
-    ++ optional (stdenv.hostPlatform.isCygwin || stdenv.hostPlatform.isAarch64) libffi
-    ++ optional stdenv.hostPlatform.isCygwin expat
-    ++ [ db gdbm ncurses sqlite readline ]
+    [ bzip2 openssl zlib libffi expat db gdbm ncurses sqlite readline ]
     ++ optionals x11Support [ tcl tk libX11 ]
     ++ optional (stdenv.isDarwin && configd != null) configd;
   nativeBuildInputs =
@@ -334,7 +327,7 @@ in with passthru; stdenv.mkDerivation ({
       '';
       license = lib.licenses.psfl;
       platforms = lib.platforms.all;
-      maintainers = with lib.maintainers; [ fridh ];
+      maintainers = with lib.maintainers; [ fridh thiagokokada ];
       # Higher priority than Python 3.x so that `/bin/python` points to `/bin/python2`
       # in case both 2 and 3 are installed.
       priority = -100;

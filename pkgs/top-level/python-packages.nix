@@ -1506,6 +1506,8 @@ self: super: with self; {
 
   caldav = callPackage ../development/python-modules/caldav { };
 
+  calver = callPackage ../development/python-modules/calver { };
+
   callee = callPackage ../development/python-modules/callee { };
 
   calmjs-parse = callPackage ../development/python-modules/calmjs-parse { };
@@ -4991,6 +4993,8 @@ self: super: with self; {
   keyrings-alt = callPackage ../development/python-modules/keyrings-alt { };
 
   keystone-engine = callPackage ../development/python-modules/keystone-engine { };
+
+  keyrings-passwordstore = callPackage ../development/python-modules/keyrings-passwordstore { };
 
   keystoneauth1 = callPackage ../development/python-modules/keystoneauth1 { };
 
@@ -11441,6 +11445,8 @@ self: super: with self; {
   types-ipaddress = callPackage ../development/python-modules/types-ipaddress { };
 
   types-protobuf = callPackage ../development/python-modules/types-protobuf { };
+
+  types-psutil = callPackage ../development/python-modules/types-psutil { };
 
   types-python-dateutil = callPackage ../development/python-modules/types-python-dateutil { };
 

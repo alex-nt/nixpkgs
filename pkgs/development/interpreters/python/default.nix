@@ -121,19 +121,19 @@
       sourceVersion = {
         major = "3";
         minor = "9";
-        patch = "15";
+        patch = "16";
         suffix = "";
       };
-      sha256 = "sha256-Etr/aAlSjZ9hVCFpUEI8njDw5HM2y1fGqgtDh91etLI=";
+      sha256 = "sha256-It3cCZJG3SdgZlVh6K23OU6gzEOnJoTGSA+TgPd4ZDk=";
     };
     python310 = {
       sourceVersion = {
         major = "3";
         minor = "10";
-        patch = "8";
+        patch = "9";
         suffix = "";
       };
-      sha256 = "sha256-ajDs3lnEcEgBPrWmWMm13sJ3ID0nk2Z/V433Zx9/A/M=";
+      sha256 = "sha256-WuA+MIJgFkuro5kh/bTb+ObQPYI1qTnUWCsz8LXkaoM=";
     };
   };
 
@@ -145,9 +145,9 @@ in {
       major = "2";
       minor = "7";
       patch = "18";
-      suffix = "";
+      suffix = ".6"; # ActiveState's Python 2 extended support
     };
-    sha256 = "0hzgxl94hnflis0d6m4szjx0b52gah7wpmcg5g00q7am6xwhwb5n";
+    sha256 = "sha256-+I0QOBkuTHMIQz71lgNn1X1vjPsjJMtFbgC0xcGTwWY=";
     inherit (darwin) configd;
     inherit passthruFun;
   };
@@ -157,10 +157,10 @@ in {
     sourceVersion = {
       major = "3";
       minor = "7";
-      patch = "15";
+      patch = "16";
       suffix = "";
     };
-    sha256 = "sha256-WRFHWgesK1PXRuiKBxavbStHNJQZGRNuoNM/ucdblxQ=";
+    sha256 = "sha256-gzjwwiIthH6QTJVTaRVdwb7u7YBujV7wSwDvR4cji/0=";
     inherit (darwin) configd;
     inherit passthruFun;
   };
@@ -170,10 +170,10 @@ in {
     sourceVersion = {
       major = "3";
       minor = "8";
-      patch = "15";
+      patch = "16";
       suffix = "";
     };
-    sha256 = "sha256-URT8eRiipeIOtarGlrMMNvQSxu8ksT9cnrngVpgtlVA=";
+    sha256 = "sha256-2F27N3QTJHPYCB3LFY80oQzK16kLlsflDqS7YfXORWI=";
     inherit (darwin) configd;
     inherit passthruFun;
   };
@@ -195,10 +195,10 @@ in {
     sourceVersion = {
       major = "3";
       minor = "11";
-      patch = "0";
+      patch = "1";
       suffix = "";
     };
-    sha256 = "sha256-pX3ILXc1hhe6ZbmEHO4eO0QfOGw3id3AZ27KB38pUcM=";
+    sha256 = "sha256-hYeRkvLP/VbLFsCSkFlJ6/Pl45S392RyNSljeQHftY8=";
     inherit (darwin) configd;
     inherit passthruFun;
   };

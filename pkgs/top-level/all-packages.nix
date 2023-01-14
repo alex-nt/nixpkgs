@@ -470,6 +470,8 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
+  ea = callPackage ../tools/misc/ea { };
+
   each = callPackage ../tools/text/each { };
 
   eclipse-mat = callPackage ../development/tools/eclipse-mat { };
@@ -801,10 +803,20 @@ with pkgs;
 
   broadlink-cli = callPackage ../tools/misc/broadlink-cli {};
 
-  fetchpatch = callPackage ../build-support/fetchpatch { }
-    // {
-      tests = pkgs.tests.fetchpatch;
-    };
+  fetchpatch = callPackage ../build-support/fetchpatch {
+    # 0.3.4 would change hashes: https://github.com/NixOS/nixpkgs/issues/25154
+    patchutils = buildPackages.patchutils_0_3_3;
+  } // {
+    tests = pkgs.tests.fetchpatch;
+    version = 1;
+  };
+
+  fetchpatch2 = callPackage ../build-support/fetchpatch {
+    patchutils = buildPackages.patchutils_0_4_2;
+  } // {
+    tests = pkgs.tests.fetchpatch2;
+    version = 2;
+  };
 
   fetchs3 = callPackage ../build-support/fetchs3 { };
 
@@ -2907,6 +2919,8 @@ with pkgs;
 
   plausible = callPackage ../servers/web-apps/plausible { };
 
+  pam-reattach = callPackage ../os-specific/darwin/pam-reattach {};
+
   reattach-to-user-namespace = callPackage ../os-specific/darwin/reattach-to-user-namespace {};
 
   skhd = callPackage ../os-specific/darwin/skhd {
@@ -2957,9 +2971,7 @@ with pkgs;
 
   anbox = callPackage ../os-specific/linux/anbox { };
 
-  androidenv = callPackage ../development/mobile/androidenv {
-    pkgs_i686 = pkgsi686Linux;
-  };
+  androidenv = callPackage ../development/mobile/androidenv { };
 
   androidndkPkgs = androidndkPkgs_21;
   androidndkPkgs_21 = (callPackage ../development/androidndk-pkgs {})."21";
@@ -3440,8 +3452,6 @@ with pkgs;
 
   clash-geoip = callPackage ../data/misc/clash-geoip { };
 
-  clasp = callPackage ../tools/misc/clasp { };
-
   clevercsv = with python3Packages; toPythonApplication clevercsv;
 
   clevis = callPackage ../tools/security/clevis {
@@ -3645,9 +3655,7 @@ with pkgs;
 
   cot = with python3Packages; toPythonApplication cot;
 
-  coturn = callPackage ../servers/coturn {
-    openssl = openssl_1_1;
-  };
+  coturn = callPackage ../servers/coturn { };
 
   coursier = callPackage ../development/tools/coursier {};
 
@@ -4374,6 +4382,8 @@ with pkgs;
 
   jellyfin-media-player = libsForQt5.callPackage ../applications/video/jellyfin-media-player {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation Cocoa CoreAudio MediaPlayer;
+    # Disable pipewire to avoid segfault, see https://github.com/jellyfin/jellyfin-media-player/issues/341
+    mpv = wrapMpv (mpv-unwrapped.override { pipewireSupport = false; }) {};
   };
 
   jellyfin-mpv-shim = python3Packages.callPackage ../applications/video/jellyfin-mpv-shim { };
@@ -5351,8 +5361,9 @@ with pkgs;
     citrix_workspace_21_12_0
     citrix_workspace_22_05_0
     citrix_workspace_22_07_0
+    citrix_workspace_22_12_0
   ;
-  citrix_workspace = citrix_workspace_22_07_0;
+  citrix_workspace = citrix_workspace_22_12_0;
 
   cmigemo = callPackage ../tools/text/cmigemo { };
 
@@ -5862,6 +5873,8 @@ with pkgs;
   desktop-file-utils = callPackage ../tools/misc/desktop-file-utils { };
 
   dfc  = callPackage ../tools/system/dfc { };
+
+  dfrs  = callPackage ../tools/system/dfrs { };
 
   dev86 = callPackage ../development/compilers/dev86 { };
 
@@ -11694,7 +11707,7 @@ with pkgs;
 
   subgit = callPackage ../applications/version-management/git-and-tools/subgit { };
 
-  subsurface = libsForQt514.callPackage ../applications/misc/subsurface { };
+  subsurface = libsForQt5.callPackage ../applications/misc/subsurface { };
 
   sudo = callPackage ../tools/security/sudo { };
 
@@ -13223,6 +13236,8 @@ with pkgs;
 
   zsh-clipboard = callPackage ../shells/zsh/zsh-clipboard { };
 
+  zsh-edit = callPackage ../shells/zsh/zsh-edit { };
+
   zsh-git-prompt = callPackage ../shells/zsh/zsh-git-prompt { };
 
   zsh-history = callPackage ../shells/zsh/zsh-history { };
@@ -13240,6 +13255,8 @@ with pkgs;
   zsh-system-clipboard = callPackage ../shells/zsh/zsh-system-clipboard { };
 
   zsh-fast-syntax-highlighting = callPackage ../shells/zsh/zsh-fast-syntax-highlighting { };
+
+  zsh-forgit = callPackage ../shells/zsh/zsh-forgit { };
 
   zsh-fzf-tab = callPackage ../shells/zsh/zsh-fzf-tab { };
 
@@ -15762,7 +15779,7 @@ with pkgs;
   php82 = callPackage ../development/interpreters/php/8.2.nix {
     stdenv = if stdenv.cc.isClang then llvmPackages.stdenv else stdenv;
     pcre2 = pcre2.override {
-      withJitSealloc = !stdenv.isDarwin;
+      withJitSealloc = false; # See https://bugs.php.net/bug.php?id=78927 and https://bugs.php.net/bug.php?id=78630
     };
   };
   php82Extensions = recurseIntoAttrs php82.extensions;
@@ -15772,7 +15789,7 @@ with pkgs;
   php81 = callPackage ../development/interpreters/php/8.1.nix {
     stdenv = if stdenv.cc.isClang then llvmPackages.stdenv else stdenv;
     pcre2 = pcre2.override {
-      withJitSealloc = !stdenv.isDarwin;
+      withJitSealloc = false; # See https://bugs.php.net/bug.php?id=78927 and https://bugs.php.net/bug.php?id=78630
     };
   };
   php81Extensions = recurseIntoAttrs php81.extensions;
@@ -15782,7 +15799,7 @@ with pkgs;
   php80 = callPackage ../development/interpreters/php/8.0.nix {
     stdenv = if stdenv.cc.isClang then llvmPackages.stdenv else stdenv;
     pcre2 = pcre2.override {
-      withJitSealloc = !stdenv.isDarwin;
+      withJitSealloc = false; # See https://bugs.php.net/bug.php?id=78927 and https://bugs.php.net/bug.php?id=78630
     };
   };
   php80Extensions = recurseIntoAttrs php80.extensions;
@@ -16327,7 +16344,8 @@ with pkgs;
     electron_18
     electron_19
     electron_20
-    electron_21;
+    electron_21
+    electron_22;
 
   autobuild = callPackage ../development/tools/misc/autobuild { };
 
@@ -18347,7 +18365,13 @@ with pkgs;
   c-blosc = callPackage ../development/libraries/c-blosc { };
 
   # justStaticExecutables is needed due to https://github.com/NixOS/nix/issues/2990
-  cachix = haskell.lib.compose.justStaticExecutables haskellPackages.cachix;
+  cachix = (haskell.lib.compose.justStaticExecutables haskellPackages.cachix).overrideAttrs(o: {
+    passthru = o.passthru or {} // {
+      tests = o.passthru.tests or {} // {
+        inherit hci;
+      };
+    };
+  });
 
   cubeb = callPackage ../development/libraries/audio/cubeb { };
 
@@ -21454,6 +21478,8 @@ with pkgs;
 
   nemo-qml-plugin-dbus = libsForQt5.callPackage ../development/libraries/nemo-qml-plugin-dbus { };
 
+  netflix = callPackage ../applications/video/netflix { };
+
   nifticlib = callPackage ../development/libraries/science/biology/nifticlib { };
 
   notify-sharp = callPackage ../development/libraries/notify-sharp { };
@@ -21667,7 +21693,9 @@ with pkgs;
 
   openexrid-unstable = callPackage ../development/libraries/openexrid-unstable { };
 
-  openldap = callPackage ../development/libraries/openldap { };
+  openldap = callPackage ../development/libraries/openldap {
+    openssl = openssl_legacy;
+  };
 
   opencolorio = darwin.apple_sdk_11_0.callPackage ../development/libraries/opencolorio {
     inherit (darwin.apple_sdk_11_0.frameworks) Carbon GLUT Cocoa;
@@ -21722,6 +21750,10 @@ with pkgs;
   };
 
   openssl = openssl_3;
+
+  openssl_legacy = openssl.override {
+    conf = ../development/libraries/openssl/3.0/legacy.cnf;
+  };
 
   inherit (callPackages ../development/libraries/openssl { })
     openssl_1_1
@@ -22587,27 +22619,6 @@ with pkgs;
   sqlite-interactive = (sqlite.override { interactive = true; }).bin;
 
   sqlite-jdbc = callPackage ../servers/sql/sqlite/jdbc { };
-
-  sqlite-replication = sqlite.overrideAttrs (oldAttrs: rec {
-    name = "sqlite-${version}";
-    version = "3.27.2+replication3";
-    src = fetchFromGitHub {
-      owner = "CanonicalLtd";
-      repo = "sqlite";
-      rev = "version-${version}";
-      sha256 = "1aw1naa5y25ial251f74h039pgcz92p4b3994jvfzqpjlz06qwvw";
-    };
-    nativeBuildInputs = [ tcl ];
-    configureFlags = oldAttrs.configureFlags ++ [
-      "--enable-replication"
-      "--disable-amalgamation"
-      "--disable-tcl"
-    ];
-    preConfigure = ''
-      echo "D 2019-03-09T15:45:46" > manifest
-      echo -n "8250984a368079bb1838d48d99f8c1a6282e00bc" > manifest.uuid
-    '';
-  });
 
   dqlite = callPackage ../development/libraries/dqlite { };
 
@@ -23516,9 +23527,9 @@ with pkgs;
 
   clickhouse = callPackage ../servers/clickhouse {
     # upstream requires llvm12 as of v22.3.2.2
-    inherit (llvmPackages_13) clang-unwrapped lld llvm;
-    llvm-bintools = llvmPackages_13.bintools;
-    stdenv = llvmPackages_13.stdenv;
+    inherit (llvmPackages_14) clang-unwrapped lld llvm;
+    llvm-bintools = llvmPackages_14.bintools;
+    stdenv = llvmPackages_14.stdenv;
   };
 
   clickhouse-cli = with python3Packages; toPythonApplication clickhouse-cli;
@@ -23596,6 +23607,8 @@ with pkgs;
   exhibitor = callPackage ../servers/exhibitor { };
 
   hyp = callPackage ../servers/http/hyp { };
+
+  peering-manager = callPackage ../servers/web-apps/peering-manager { };
 
   podgrab = callPackage ../servers/misc/podgrab { };
 
@@ -25894,6 +25907,8 @@ with pkgs;
   tunctl = callPackage ../os-specific/linux/tunctl { };
 
   twa = callPackage ../tools/networking/twa { };
+
+  twingate = callPackage ../applications/networking/twingate { };
 
   # Upstream U-Boots:
   inherit (callPackage ../misc/uboot {})
@@ -29978,7 +29993,9 @@ with pkgs;
 
   ladspa-sdk = callPackage ../applications/audio/ladspa-sdk { };
 
-  ladybird = qt6.callPackage ../applications/networking/browsers/ladybird { };
+  ladybird = qt6Packages.callPackage ../applications/networking/browsers/ladybird {
+    stdenv = if stdenv.isDarwin then llvmPackages_14.stdenv else gcc11Stdenv;
+  };
 
   lazpaint = callPackage ../applications/graphics/lazpaint { };
 
@@ -31339,6 +31356,8 @@ with pkgs;
 
   poke = callPackage ../applications/editors/poke { };
 
+  pokefinder = qt6Packages.callPackage ../tools/games/pokefinder { };
+
   pokemonsay = callPackage ../tools/misc/pokemonsay { };
 
   polar-bookshelf = callPackage ../applications/misc/polar-bookshelf { };
@@ -32621,8 +32640,8 @@ with pkgs;
 
   vdpauinfo = callPackage ../tools/X11/vdpauinfo { };
 
-  vengi-tools = callPackage ../applications/graphics/vengi-tools {
-    inherit (darwin.apple_sdk.frameworks) Carbon CoreServices OpenCL;
+  vengi-tools = darwin.apple_sdk_11_0.callPackage ../applications/graphics/vengi-tools {
+    inherit (darwin.apple_sdk_11_0.frameworks) Carbon CoreServices OpenCL;
   };
 
   verbiste = callPackage ../applications/misc/verbiste {
@@ -35954,7 +35973,7 @@ with pkgs;
   };
 
 
-  inherit (callPackages ../applications/science/logic/z3 { python = python2; })
+  inherit (callPackages ../applications/science/logic/z3 { python = python3; })
     z3_4_11
     z3_4_8
     z3_4_7;
@@ -36246,6 +36265,8 @@ with pkgs;
   root = callPackage ../applications/science/misc/root {
     python = python3;
     inherit (darwin.apple_sdk.frameworks) Cocoa CoreSymbolication OpenGL;
+    # https://github.com/NixOS/nixpkgs/issues/201254
+    stdenv = if stdenv.isLinux && stdenv.isAarch64 && stdenv.cc.isGNU then gcc11Stdenv else stdenv;
   };
 
   root5 = lowPrio (callPackage ../applications/science/misc/root/5.nix {
@@ -37408,8 +37429,6 @@ with pkgs;
   vaultwarden-mysql = vaultwarden.override { dbBackend = "mysql"; };
   vaultwarden-postgresql = vaultwarden.override { dbBackend = "postgresql"; };
 
-  vaultwarden-vault = callPackage ../tools/security/vaultwarden/vault.nix { };
-
   vazir-fonts = callPackage ../data/fonts/vazir-fonts { };
 
   vhs = callPackage ../applications/misc/vhs { };
@@ -37531,7 +37550,7 @@ with pkgs;
 
   wmutils-opt = callPackage ../tools/X11/wmutils-opt { };
 
-  wordpress = callPackage ../servers/web-apps/wordpress { };
+  inherit (callPackage ../servers/web-apps/wordpress {}) wordpress wordpress6_0 wordpress6_1;
 
   wordpressPackages = ( callPackage ../servers/web-apps/wordpress/packages {
     plugins = lib.importJSON ../servers/web-apps/wordpress/packages/plugins.json;
