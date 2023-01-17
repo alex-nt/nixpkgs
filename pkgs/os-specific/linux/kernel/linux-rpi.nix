@@ -2,8 +2,8 @@
 
 let
   # NOTE: raspberrypifw & raspberryPiWirelessFirmware should be updated with this
-  modDirVersion = "5.15.84";
-  tag = "1.20230106";
+  modDirVersion = "6.1.6";
+  tag = "1.20230117-rpy-6.1.y";
 in
 lib.overrideDerivation (buildLinux (args // {
   version = "${modDirVersion}-${tag}";
@@ -12,8 +12,8 @@ lib.overrideDerivation (buildLinux (args // {
   src = fetchFromGitHub {
     owner = "raspberrypi";
     repo = "linux";
-    rev = tag;
-    hash = "sha256-Rs9cXYDCIXFRLcgmz+PLVloGYXUaNmyUVsCy2BW5R6k=";
+    rev = "2c11bb09335749c602b6973d02542021f92f091d";
+    hash = "sha256-Hl6OQcV1SEYNhVZ9YNdWnMXDvn8pbcdA1PR6C8iKSGo=";
   };
 
   defconfig = {

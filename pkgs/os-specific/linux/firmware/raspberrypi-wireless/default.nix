@@ -9,15 +9,15 @@ stdenvNoCC.mkDerivation {
       name = "bluez-firmware";
       owner = "RPi-Distro";
       repo = "bluez-firmware";
-      rev = "dd840d991939f5046959b8c564596c7228f9d41d";
-      hash = "sha256-lYaXNLuIMa3oRg5toEGAX8uWqZQWz2tXn+Qq4GoE4Cc=";
+      rev = "9556b08ace2a1735127894642cc8ea6529c04c90";
+      hash = "sha256-gKGK0XzNrws5REkKg/JP6SZx3KsJduu53SfH3Dichkc=";
     })
     (fetchFromGitHub {
       name = "firmware-nonfree";
       owner = "RPi-Distro";
       repo = "firmware-nonfree";
-      rev = "8295cb71155909480d427d5dbdb230fac593e84d";
-      hash = "sha256-Vqr3LPrYIxJmKE8sT0mH25Ee8+sKnrG2kzCKZwAAugQ=";
+      rev = "8e349de20c8cb5d895b3568777ec53cbb333398f";
+      hash = "sha256-45/FnaaZTEG6jLmbaXohpNpS6BEZu3DBDHqquq8ukXc=";
     })
   ];
 
