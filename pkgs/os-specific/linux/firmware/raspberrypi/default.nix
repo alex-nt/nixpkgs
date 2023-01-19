@@ -3,7 +3,7 @@
 stdenvNoCC.mkDerivation rec {
   # NOTE: this should be updated with linux_rpi
   pname = "raspberrypi-firmware";
-  version = "1.20230117-6.1.y";
+  version = "1.20230119-6.1.y";
 
   src = fetchFromGitHub {
     owner = "raspberrypi";
