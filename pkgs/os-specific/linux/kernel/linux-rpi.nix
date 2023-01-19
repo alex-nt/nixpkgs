@@ -12,8 +12,8 @@ lib.overrideDerivation (buildLinux (args // {
   src = fetchFromGitHub {
     owner = "raspberrypi";
     repo = "linux";
-    rev = "2c11bb09335749c602b6973d02542021f92f091d";
-    hash = "sha256-Hl6OQcV1SEYNhVZ9YNdWnMXDvn8pbcdA1PR6C8iKSGo=";
+    rev = "2c69ae1412faa66018abc9c86c521111d30de095";
+    hash = "sha256-NZEbc+LRqG+sQfU0dlsoG54Tj8y4zbpjAD4GPe8eFgg=";
   };
 
   defconfig = {

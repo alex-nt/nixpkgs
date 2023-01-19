@@ -8,8 +8,8 @@ stdenvNoCC.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "raspberrypi";
     repo = "firmware";
-    rev = "da47183884b8317a3925d3e702f393ec3a6b7fb9";
-    hash = "sha256-k3d4NUe4XDGJ0kdez0kSzmpBP1Ra/DsZ9ulz8ps9Nr4=";
+    rev = "2cc92f7963b85943f4b2c81fe72bb15d32da4e4f";
+    hash = "sha256-j6o+KVI6A6ulONHHMJG6cT6od48rbqwDxTrKEzrPNUk=";
   };
 
   installPhase = ''
