@@ -37,11 +37,6 @@ stdenvNoCC.mkDerivation {
     # Bluetooth firmware
     cp -rv "$NIX_BUILD_TOP/bluez-firmware/broadcom/." "$out/lib/firmware/brcm"
 
-    # CM4 symlink must be added since it's missing from upstream
-    pushd $out/lib/firmware/brcm &>/dev/null
-    ln -s "./brcmfmac43455-sdio.txt" "$out/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-compute-module.txt"
-    popd &>/dev/null
-
     runHook postInstall
   '';
 
