@@ -2,8 +2,8 @@
 
 let
   # NOTE: raspberrypifw & raspberryPiWirelessFirmware should be updated with this
-  modDirVersion = "5.15.74";
-  tag = "1.20221028";
+  modDirVersion = "6.1.7";
+  tag = "1.20230119-rpy-6.1.y";
 in
 lib.overrideDerivation (buildLinux (args // {
   version = "${modDirVersion}-${tag}";
@@ -12,8 +12,8 @@ lib.overrideDerivation (buildLinux (args // {
   src = fetchFromGitHub {
     owner = "raspberrypi";
     repo = "linux";
-    rev = tag;
-    hash = "sha256-2UdSW9X9prAya9mvEp3i0l3Uim0wtDYEY0WrD2wntaI=";
+    rev = "2c69ae1412faa66018abc9c86c521111d30de095";
+    hash = "sha256-NZEbc+LRqG+sQfU0dlsoG54Tj8y4zbpjAD4GPe8eFgg=";
   };
 
   defconfig = {
@@ -76,6 +76,7 @@ lib.overrideDerivation (buildLinux (args // {
     copyDTB bcm2709-rpi-2-b.dtb bcm2836-rpi-2-b.dtb
   '' + lib.optionalString (lib.elem stdenv.hostPlatform.system ["armv7l-linux" "aarch64-linux"]) ''
     copyDTB bcm2710-rpi-zero-2.dtb bcm2837-rpi-zero-2.dtb
+    copyDTB bcm2710-rpi-zero-2-w.dtb bcm2837-rpi-zero-2-w.dtb
     copyDTB bcm2710-rpi-3-b.dtb bcm2837-rpi-3-b.dtb
     copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-a-plus.dtb
     copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-b-plus.dtb
