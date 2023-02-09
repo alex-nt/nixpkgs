@@ -15969,6 +15969,10 @@ with pkgs;
         pipewireSupport = false;
       };
     };
+
+    # the default readline is too old to be found by pkg-config,
+    # and thus meson, and thus pipewire
+    readline = readline81;
   };
 
   pipewire-media-session = callPackage ../development/libraries/pipewire/media-session.nix {};
@@ -21300,6 +21304,8 @@ with pkgs;
   lzo = callPackage ../development/libraries/lzo { };
 
   opencl-clang = callPackage ../development/libraries/opencl-clang { };
+
+  magic-enum = callPackage ../development/libraries/magic-enum { };
 
   mapnik = callPackage ../development/libraries/mapnik {
     harfbuzz = harfbuzz.override {
