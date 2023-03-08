@@ -2,7 +2,7 @@
 
 let
   # NOTE: raspberrypifw & raspberryPiWirelessFirmware should be updated with this
-  modDirVersion = "6.2.5";
+  modDirVersion = "6.2.2";
   version = "1.2023-03-08-6.2.2";
 in
 lib.overrideDerivation (buildLinux (args // {
