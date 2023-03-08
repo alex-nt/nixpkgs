@@ -1,11 +1,11 @@
 {
-  "packageVersion": "109.0.1-2",
+  "packageVersion": "110.0.1-1",
   "source": {
-    "rev": "109.0.1-2",
-    "sha256": "1b5572i7aqad0pmjw88d3mhmhhhacp505z0d9l4l89r7gadssbwb"
+    "rev": "110.0.1-1",
+    "sha256": "06k33gf2q77w3airgbqmki555pp2yv33cbkivbi4hgz80zl1m4i3"
   },
   "firefox": {
-    "version": "109.0.1",
-    "sha512": "58b21449a16a794152888f50e7fe9488c28739a7e067729acdc1de9f2e8384e6316cffdfe89f690f0d211189668d940825b4f8a26b8100468ae120772df99d72"
+    "version": "110.0.1",
+    "sha512": "42c6a99a3874a0f60121188c43788fb35577734d9366c3f89ad41b8328cc542ce172ec81ca35b9ea551eaa698197ccdb43922ec3215d311e0770aaaa59625d21"
   }
 }
