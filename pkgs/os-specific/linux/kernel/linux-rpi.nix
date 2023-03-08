@@ -6,7 +6,7 @@ let
   version = "1.2023-03-08-6.1.15";
 in
 lib.overrideDerivation (buildLinux (args // {
-  version = "${modDirVersion}-${tag}";
+  version = "${modDirVersion}-${version}";
   inherit modDirVersion;
 
   src = fetchFromGitHub {
