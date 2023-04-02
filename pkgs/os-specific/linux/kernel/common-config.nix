@@ -943,8 +943,8 @@ let
 
       SCHED_CORE = whenAtLeast "5.14" yes;
 
-      LRU_GEN = whenAtLeast "6.1"  yes;
-      LRU_GEN_ENABLED =  whenAtLeast "6.1" yes;
+      LRU_GEN = no;
+      LRU_GEN_ENABLED = no;
 
       FSL_MC_UAPI_SUPPORT = mkIf (stdenv.hostPlatform.system == "aarch64-linux") (whenAtLeast "5.12" yes);
 
