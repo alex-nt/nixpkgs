@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://apache/maven/maven-3/${version}/binaries/${pname}-${version}-bin.tar.gz";
-    sha512 = "sha512-sV2tkd0rvygYE23OPG2z3jOFpbLzrX0AiTPnT+vzu40FRxO+8iBpqBFmovJ9sEQMGiCJEFwQvLXwsW52vcpNiw==";
+    sha512 = "sha512-kAve7q5VDS0rOSD+DgDkGwBp8ywBnVZkZQFb3Rs4ZjlcvgFuItldJdUdOl5hSvLIPsmygtczCfZEhZu60Itj2w==";
   };
 
   nativeBuildInputs = [ makeWrapper ];
