@@ -182,7 +182,7 @@ in
       };
       "/" = {
         device = "/dev/disk/by-label/NIXOS_SD";
-        fsType = "ext4"; 
+        fsType = "ext4";
       };
     };
 
@@ -225,7 +225,7 @@ in
         rootPartitionNumber=${toString (if config.sdImage.swap.enable then 3 else 2)}
 
         # Gap in front of the first partition, in MiB
-        gap=${toString config.sdImage.firmwarePartitionOffset}f
+        gap=${toString config.sdImage.firmwarePartitionOffset}
 
         # Create the image file sized to fit /boot/firmware and /, plus slack for the gap.
         rootSizeBlocks=$(du -B 512 --apparent-size $root_fs | awk '{ print $1 }')
