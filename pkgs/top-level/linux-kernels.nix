@@ -126,6 +126,7 @@ in {
       kernelPatches = [
         kernelPatches.bridge_stp_helper
         kernelPatches.request_key_helper
+        kernelPatches.CVE-2023-32233
       ];
     };
 
@@ -141,6 +142,7 @@ in {
         kernelPatches.bridge_stp_helper
         kernelPatches.request_key_helper
         kernelPatches.export-rt-sched-migrate
+        kernelPatches.CVE-2023-32233
       ];
     };
 
@@ -149,6 +151,7 @@ in {
         kernelPatches.bridge_stp_helper
         kernelPatches.request_key_helper
         kernelPatches.fix-em-ice-bonding
+        kernelPatches.fix-amdgpu-5_15
       ];
     };
 
@@ -166,13 +169,7 @@ in {
       ];
     };
 
-    linux_6_2 = callPackage ../os-specific/linux/kernel/linux-6.2.nix {
-      kernelPatches = [
-        kernelPatches.bridge_stp_helper
-        kernelPatches.request_key_helper
-        kernelPatches.fix-em-ice-bonding
-      ];
-    };
+    linux_6_2 = throw "linux 6.2 was removed because it has reached its end of life upstream";
 
     linux_6_3 = callPackage ../os-specific/linux/kernel/linux-6.3.nix {
       kernelPatches = [
@@ -187,6 +184,7 @@ in {
         kernelPatches = [
           kernelPatches.bridge_stp_helper
           kernelPatches.request_key_helper
+          kernelPatches.make-maple-state-reusable-after-mas_empty_area
         ];
       };
       latest = packageAliases.linux_latest.kernel;
@@ -253,6 +251,7 @@ in {
     linux_5_19_hardened = throw "linux 5.19 was removed because it has reached its end of life upstream";
     linux_6_0_hardened = throw "linux 6.0 was removed because it has reached its end of life upstream";
     linux_6_1_hardened = hardenedKernelFor kernels.linux_6_1 { };
+    linux_6_3_hardened = hardenedKernelFor kernels.linux_6_3 { };
 
   }));
   /*  Linux kernel modules are inherently tied to a specific kernel.  So
@@ -538,7 +537,7 @@ in {
     linux_5_19 = throw "linux 5.19 was removed because it reached its end of life upstream"; # Added 2022-11-01
     linux_6_0 = throw "linux 6.0 was removed because it reached its end of life upstream"; # Added 2023-01-20
     linux_6_1 = recurseIntoAttrs (packagesFor kernels.linux_6_1);
-    linux_6_2 = recurseIntoAttrs (packagesFor kernels.linux_6_2);
+    linux_6_2 = throw "linux 6.2 was removed because it reached its end of life upstream"; # Added 2023-05-26
     linux_6_3 = recurseIntoAttrs (packagesFor kernels.linux_6_3);
   };
 
@@ -581,6 +580,7 @@ in {
     linux_5_19_hardened = throw "linux 5.19 was removed because it has reached its end of life upstream";
     linux_6_0_hardened = throw "linux 6.0 was removed because it has reached its end of life upstream";
     linux_6_1_hardened = recurseIntoAttrs (hardenedPackagesFor kernels.linux_6_1 { });
+    linux_6_3_hardened = recurseIntoAttrs (hardenedPackagesFor kernels.linux_6_3 { });
 
     linux_zen = recurseIntoAttrs (packagesFor kernels.linux_zen);
     linux_lqx = recurseIntoAttrs (packagesFor kernels.linux_lqx);
