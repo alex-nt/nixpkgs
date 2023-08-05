@@ -242,7 +242,7 @@ in
 
             start=''${gap}M, size=$firmwareSizeBlocks, type=b
             ${lib.optionalString config.sdImage.swap.enable ''
-            start=$((gap + ${toString config.sdImage.swap.size}))M, size=''${swapSize}M, type=82
+            start=$((gap + ${toString config.sdImage.firmwareSize}))M, size=''${swapSize}M, type=82
             ''}
             start=$((gap + ${toString config.sdImage.firmwareSize} + swapSize))M, type=83, bootable
         EOF
