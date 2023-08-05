@@ -153,7 +153,7 @@ in
 
     swap = {
       enable = mkEnableOption "Create a swap partition.";
-      firmwarePartitionName = mkOption {
+      partitionName = mkOption {
         type = types.str;
         default = "SWAP";
         description = lib.mdDoc ''
