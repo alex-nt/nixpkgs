@@ -150,6 +150,24 @@ in
         Whether to configure the sd image to expand it's partition on boot.
       '';
     };
+
+    swap = {
+      enable = mkEnableOption "Create a swap partition.";
+      firmwarePartitionName = mkOption {
+        type = types.str;
+        default = "SWAP";
+        description = lib.mdDoc ''
+          Name of the filesystem which holds the swap.
+        '';
+      };
+      size = mkOption {
+        type = types.int;
+        default = 2 * 1024;
+        description = lib.mdDoc ''
+          Size of the swap partition, in megabytes.
+        '';
+      };
+    };
   };
 
   config = {
@@ -164,8 +182,12 @@ in
       };
       "/" = {
         device = "/dev/disk/by-label/NIXOS_SD";
-        fsType = "ext4";
+        fsType = "ext4"; 
       };
+
+      swapDevices = lib.mkIf config.sdImage.swap.enable [{
+        device = "/dev/disk/by-label/${config.sdImage.swap.partitionName}";
+      }];
     };
 
     sdImage.storePaths = [ config.system.build.toplevel ];
@@ -197,13 +219,18 @@ in
         zstd -d --no-progress "${rootfsImage}" -o $root_fs
         ''}
 
+        # Set swap size. Set it to 0 it swap is disabled.
+        swapSize=${toString (if config.sdImage.swap.enable then config.sdImage.swap.size else 0)}
+        # The root partition is #2 if there is no swap, but is #3 is there is one
+        rootPartitionNumber=${toString (if config.sdImage.swap.enable then 3 else 2)}
+
         # Gap in front of the first partition, in MiB
-        gap=${toString config.sdImage.firmwarePartitionOffset}
+        gap=${toString config.sdImage.firmwarePartitionOffset}f
 
         # Create the image file sized to fit /boot/firmware and /, plus slack for the gap.
         rootSizeBlocks=$(du -B 512 --apparent-size $root_fs | awk '{ print $1 }')
         firmwareSizeBlocks=$((${toString config.sdImage.firmwareSize} * 1024 * 1024 / 512))
-        imageSize=$((rootSizeBlocks * 512 + firmwareSizeBlocks * 512 + gap * 1024 * 1024))
+        imageSize=$((rootSizeBlocks * 512 + firmwareSizeBlocks * 512 + gap * 1024 * 1024 + swapSize * 1024 * 1024))
         truncate -s $imageSize $img
 
         # type=b is 'W95 FAT32', type=83 is 'Linux'.
@@ -214,12 +241,24 @@ in
             label-id: ${config.sdImage.firmwarePartitionID}
 
             start=''${gap}M, size=$firmwareSizeBlocks, type=b
-            start=$((gap + ${toString config.sdImage.firmwareSize}))M, type=83, bootable
+            ${lib.optionalString config.sdImage.swap.enable ''
+            start=$((gap + ${toString config.sdImage.swapSize}))M, size=''${swapSize}M, type=82
+            ''}
+            start=$((gap + ${toString config.sdImage.firmwareSize} + swapSize))M, type=83, bootable
         EOF
 
         # Copy the rootfs into the SD image
-        eval $(partx $img -o START,SECTORS --nr 2 --pairs)
+        eval $(partx $img -o START,SECTORS --nr $rootPartitionNumber --pairs)
         dd conv=notrunc if=$root_fs of=$img seek=$START count=$SECTORS
+
+        # * Create the swap if it is enabled
+        ${lib.optionalString config.sdImage.swap.enable ''
+        # Create the swap
+        eval $(partx $img -o START,SECTORS --nr 2 --pairs)
+        dd if=/dev/zero of=swap.img bs=''${swapSize}M count=1
+        mkswap -L "${config.sdImage.swap.partitionName}" swap.img
+        dd conv=notrunc if=swap.img of=$img seek=$START count=$SECTORS          
+        ''}
 
         # Create a FAT32 /boot/firmware partition of suitable size into firmware_part.img
         eval $(partx $img -o START,SECTORS --nr 1 --pairs)
