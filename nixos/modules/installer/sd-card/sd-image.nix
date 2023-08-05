@@ -184,11 +184,11 @@ in
         device = "/dev/disk/by-label/NIXOS_SD";
         fsType = "ext4"; 
       };
-
-      swapDevices = lib.mkIf config.sdImage.swap.enable [{
-        device = "/dev/disk/by-label/${config.sdImage.swap.partitionName}";
-      }];
     };
+
+    swapDevices = lib.mkIf config.sdImage.swap.enable [{
+      device = "/dev/disk/by-label/${config.sdImage.swap.partitionName}";
+    }];
 
     sdImage.storePaths = [ config.system.build.toplevel ];
 
