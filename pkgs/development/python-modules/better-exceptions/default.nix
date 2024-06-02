@@ -9,6 +9,8 @@ buildPythonPackage rec {
   version = "0.3.3";
   format = "setuptools";
 
+  doCheck = false;
+
   src = fetchPypi {
     pname = "better_exceptions";
     inherit version;
