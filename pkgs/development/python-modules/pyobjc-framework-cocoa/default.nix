@@ -2,6 +2,7 @@
   lib,
   buildPythonPackage,
   fetchPypi,
+  setuptools,
 }:
 
 buildPythonPackage rec {
@@ -15,7 +16,9 @@ buildPythonPackage rec {
     hash = "sha256-05+Q/+BBQ5EQYMOS5iuVFPFMqroRllfW4rixl69J4Rc=";
   };
 
-  buildInputs = [];
+  propagatedBuildInputs = [
+    setuptools
+  ];
 
   meta = with lib; {
     description = "Wrappers for framework 'Cocoa', that is frameworks 'CoreFoundation','Foundation' and 'AppKit'.";
