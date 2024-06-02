@@ -5,7 +5,9 @@
   fetchPypi,
   setuptools,
   makeWrapper,
-  xcodeWrapper
+  xcodeenv,
+  xcodeWrapperArgs,
+  xcodeWrapper ? xcodeenv.composeXcodeWrapper xcodeWrapperArgs
 }:
 
 buildPythonPackage rec {
