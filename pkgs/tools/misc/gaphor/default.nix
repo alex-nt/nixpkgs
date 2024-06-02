@@ -35,7 +35,7 @@ buildPythonApplication rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-f4f360535ffd44be905db6b4827e331c202d495de26341ce63545fe9b932cf16=";
+    hash = "";
   };
 
   nativeBuildInputs = [
