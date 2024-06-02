@@ -24,7 +24,7 @@ buildPythonPackage rec {
   ];
 
   nativeBuildInputs = [ makeWrapper ]
-    ++ lib.optionals stdenv.isDarwin [ (xcodeenv.composeXcodeWrapper {}) ];
+    ++ lib.optionals stdenv.isDarwin [ (xcodeenv.composeXcodeWrapper { version = "15.4"; }) ];
 
   meta = with lib; {
     description = "Wrappers for framework 'Cocoa', that is frameworks 'CoreFoundation','Foundation' and 'AppKit'.";
