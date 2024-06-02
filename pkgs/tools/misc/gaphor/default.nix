@@ -1,5 +1,4 @@
 { lib
-, stdenv
 , buildPythonApplication
 , fetchPypi
 , copyDesktopItems
@@ -18,7 +17,6 @@
 , pydot
 , defusedxml
 , better-exceptions
-, pyobjc-framework-cocoa
 , babel
 , pygobject3
 , tinycss2
@@ -64,8 +62,6 @@ buildPythonApplication rec {
     pillow
     defusedxml
     dulwich
-  ] ++ lib.optionals stdenv.isDarwin [
-    pyobjc-framework-cocoa
   ];
 
   desktopItems = makeDesktopItem {
@@ -96,6 +92,6 @@ buildPythonApplication rec {
     maintainers = with maintainers; [ wolfangaukang ];
     homepage = "https://github.com/gaphor/gaphor";
     license = licenses.asl20;
-    platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
   };
 }

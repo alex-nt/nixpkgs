@@ -11483,8 +11483,6 @@ self: super: with self; {
 
   pyobihai = callPackage ../development/python-modules/pyobihai { };
 
-  pyobjc-framework-cocoa = callPackage ../development/python-modules/pyobjc-framework-cocoa { };
-
   pyocd = callPackage ../development/python-modules/pyocd { };
 
   pyocd-pemicro = callPackage ../development/python-modules/pyocd-pemicro { };
