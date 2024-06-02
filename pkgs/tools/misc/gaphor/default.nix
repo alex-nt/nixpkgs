@@ -6,7 +6,7 @@
 , gobject-introspection
 , poetry-core
 , wrapGAppsHook4
-, gtksourceview4
+, gtksourceview5
 , pango
 , gaphas
 , generic
@@ -45,7 +45,7 @@ buildPythonApplication rec {
   ];
 
   buildInputs = [
-    gtksourceview4
+    gtksourceview5
     pango
   ];
 
