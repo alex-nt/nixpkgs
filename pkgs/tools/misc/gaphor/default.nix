@@ -21,13 +21,13 @@
 
 buildPythonApplication rec {
   pname = "gaphor";
-  version = "2.8.2";
+  version = "2.25.1";
 
   format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-+qqsSLjdY2I19fxdfkOEQ9DhTTHccUDll4O5yqtLiz0=";
+    sha256 = "sha256-0000000000000000000000000000000000000000000=";
   };
 
   nativeBuildInputs = [
@@ -79,6 +79,6 @@ buildPythonApplication rec {
     maintainers = with maintainers; [ wolfangaukang ];
     homepage = "https://github.com/gaphor/gaphor";
     license = licenses.asl20;
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
   };
 }
