@@ -1,8 +1,11 @@
 {
   lib,
+  stdenv,
   buildPythonPackage,
   fetchPypi,
   setuptools,
+  makeWrapper,
+  xcodeWrapper
 }:
 
 buildPythonPackage rec {
@@ -19,6 +22,9 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     setuptools
   ];
+
+  nativeBuildInputs = [ makeWrapper ]
+    ++ lib.optionals stdenv.isDarwin [ xcodeWrapper ];
 
   meta = with lib; {
     description = "Wrappers for framework 'Cocoa', that is frameworks 'CoreFoundation','Foundation' and 'AppKit'.";
