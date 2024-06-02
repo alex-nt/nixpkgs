@@ -10,7 +10,8 @@ buildPythonPackage rec {
   format = "pyproject";
 
   src = fetchPypi {
-    inherit pname version;
+    pname = "pyobjc_framework_cocoa";
+    inherit version;
     hash = "";
   };
 
