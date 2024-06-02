@@ -49,6 +49,7 @@ buildPythonApplication rec {
   buildInputs = [
     gtksourceview5
     pango
+    libadwaita
   ];
 
   propagatedBuildInputs = [
