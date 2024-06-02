@@ -1,4 +1,5 @@
 { lib
+, stdenv
 , buildPythonApplication
 , fetchPypi
 , copyDesktopItems
@@ -11,6 +12,13 @@
 , generic
 , jedi
 , pycairo
+, pillow
+, dulwich
+, pydot
+, defusedxml
+, better-exceptions
+, pyobjc-framework-cocoa
+, babel
 , pygobject3
 , tinycss2
 , gtk3
@@ -49,6 +57,14 @@ buildPythonApplication rec {
     pycairo
     pygobject3
     tinycss2
+    pillow
+    dulwich
+    pydot
+    defusedxml
+    better-exceptions
+    babel
+  ] ++ lib.optionals stdenv.isDarwin [
+    pyobjc-framework-cocoa
   ];
 
   desktopItems = makeDesktopItem {
