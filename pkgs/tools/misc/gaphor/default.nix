@@ -79,6 +79,6 @@ buildPythonApplication rec {
     maintainers = with maintainers; [ wolfangaukang ];
     homepage = "https://github.com/gaphor/gaphor";
     license = licenses.asl20;
-    platforms = [ "x86_64-linux" "aarch64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
   };
 }
