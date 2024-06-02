@@ -10,7 +10,8 @@ buildPythonPackage rec {
   format = "setuptools";
 
   src = fetchPypi {
-    inherit pname version;
+    pname = "better_exceptions";
+    inherit version;
     hash = "";
   };
 
