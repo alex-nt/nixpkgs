@@ -5,7 +5,7 @@
 , copyDesktopItems
 , gobject-introspection
 , poetry-core
-, wrapGAppsHook3
+, wrapGAppsHook4
 , gtksourceview4
 , pango
 , gaphas
@@ -41,7 +41,7 @@ buildPythonApplication rec {
     copyDesktopItems
     gobject-introspection
     poetry-core
-    wrapGAppsHook3
+    wrapGAppsHook4
   ];
 
   buildInputs = [
@@ -74,7 +74,7 @@ buildPythonApplication rec {
     desktopName = "Gaphor";
   };
 
-  # Disable automatic wrapGAppsHook3 to prevent double wrapping
+  # Disable automatic wrapGAppsHook4 to prevent double wrapping
   dontWrapGApps = true;
 
   postInstall = ''
