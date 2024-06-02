@@ -43,7 +43,6 @@ buildPythonApplication rec {
     gobject-introspection
     poetry-core
     wrapGAppsHook4
-    libadwaita
   ];
 
   buildInputs = [
