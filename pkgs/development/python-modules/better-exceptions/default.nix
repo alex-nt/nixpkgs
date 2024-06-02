@@ -1,7 +1,7 @@
 {
   lib,
   buildPythonPackage,
-  fetchPypi,
+  fetchPypi
 }:
 
 buildPythonPackage rec {
@@ -13,8 +13,6 @@ buildPythonPackage rec {
     inherit pname version;
     hash = "";
   };
-
-  buildInputs = [];
 
   meta = with lib; {
     description = "Pretty and more helpful exceptions in Python, automatically.";

@@ -30,7 +30,6 @@
 buildPythonApplication rec {
   pname = "gaphor";
   version = "2.25.1";
-
   format = "pyproject";
 
   src = fetchPypi {
