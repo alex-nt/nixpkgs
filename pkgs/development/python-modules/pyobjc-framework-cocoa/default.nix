@@ -12,7 +12,7 @@ buildPythonPackage rec {
   src = fetchPypi {
     pname = "pyobjc_framework_cocoa";
     inherit version;
-    hash = "";
+    hash = "sha256-05+Q/+BBQ5EQYMOS5iuVFPFMqroRllfW4rixl69J4Rc=";
   };
 
   buildInputs = [];
