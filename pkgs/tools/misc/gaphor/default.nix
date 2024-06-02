@@ -7,6 +7,7 @@
 , poetry-core
 , wrapGAppsHook4
 , gtksourceview5
+, libadwaita
 , pango
 , gaphas
 , generic
@@ -42,6 +43,7 @@ buildPythonApplication rec {
     gobject-introspection
     poetry-core
     wrapGAppsHook4
+    libadwaita
   ];
 
   buildInputs = [
