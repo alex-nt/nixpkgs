@@ -21,7 +21,7 @@
 , babel
 , pygobject3
 , tinycss2
-, gtk3
+, gtk4
 , librsvg
 , makeDesktopItem
 , python
@@ -50,18 +50,18 @@ buildPythonApplication rec {
   ];
 
   propagatedBuildInputs = [
-    gaphas
-    generic
-    jedi
     pycairo
     pygobject3
+    gaphas
+    generic
     tinycss2
-    pillow
-    dulwich
-    pydot
-    defusedxml
-    better-exceptions
     babel
+    jedi
+    better-exceptions
+    pydot
+    pillow
+    defusedxml
+    dulwich
   ] ++ lib.optionals stdenv.isDarwin [
     pyobjc-framework-cocoa
   ];
@@ -84,7 +84,7 @@ buildPythonApplication rec {
   preFixup = ''
     makeWrapperArgs+=(
       "''${gappsWrapperArgs[@]}" \
-      --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}/" \
+      --prefix XDG_DATA_DIRS : "${gtk4}/share/gsettings-schemas/${gtk4.name}/" \
       --set GDK_PIXBUF_MODULE_FILE "${librsvg.out}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
     )
   '';
