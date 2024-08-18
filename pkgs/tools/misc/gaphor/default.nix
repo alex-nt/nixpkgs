@@ -28,13 +28,24 @@
 
 buildPythonApplication rec {
   pname = "gaphor";
+<<<<<<< HEAD
   version = "2.25.1";
   format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-9PNgU1/9RL6QXba0gn4zHCAtSV3iY0HOY1Rf6bkyzxY=";
+=======
+  version = "2.26.0";
+  pyproject = true;
+
+  src = fetchPypi {
+    inherit pname version;
+    hash = "sha256-e0K5bfgPqlJh8qrAz40c/w3ANzkfa/6txuqzQDJYXfE=";
+>>>>>>> update-gaphor
   };
+
+  pythonRelaxDeps = [ "defusedxml" ];
 
   nativeBuildInputs = [
     copyDesktopItems
@@ -49,7 +60,13 @@ buildPythonApplication rec {
     libadwaita
   ];
 
+<<<<<<< HEAD
   propagatedBuildInputs = [
+=======
+  build-system = [ poetry-core ];
+
+  dependencies = [
+>>>>>>> update-gaphor
     pycairo
     pygobject3
     gaphas
