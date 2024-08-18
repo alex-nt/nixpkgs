@@ -7,9 +7,7 @@
 buildPythonPackage rec {
   pname = "better-exceptions";
   version = "0.3.3";
-  format = "setuptools";
-
-  doCheck = false;
+  pyproject = true;
 
   src = fetchPypi {
     pname = "better_exceptions";
@@ -17,9 +15,17 @@ buildPythonPackage rec {
     hash = "sha256-5Oa8GERNXwTm6JSxA4Hl6SHT1UQkBBgWLH21fp6zRTs=";
   };
 
-  meta = with lib; {
+  build-system = [ setuptools ];
+
+  pythonImportChecks = [ "better_exceptions" ];
+
+  # As noted by @WolfangAukang, some check files need to be disabled because of various errors, same with some tests.
+  # After disabling and running the build, no tests are collected.
+  doCheck = false;
+
+  meta = {
     description = "Pretty and more helpful exceptions in Python, automatically.";
     homepage = "https://github.com/qix-/better-exceptions";
-    license = licenses.mit;
+    license = lib.licenses.mit;
   };
 }
