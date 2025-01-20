@@ -115,11 +115,12 @@ rec {
             --add-flags "-classpath $gradle_launcher_jar org.gradle.launcher.GradleMain${toolchain.property}"
         '';
 
-      dontFixup = !stdenv.hostPlatform.isLinux;
+      dontFixup = !stdenv.hostPlatform.isLinux || !stdenv.hostPlatform.isDarwin;
 
       fixupPhase =
         let
-          arch = if stdenv.hostPlatform.is64bit then "amd64" else "i386";
+          os = if stdenv.hostPlatform.isLinux then "linux" else if stdenv.hostPlatform.isDarwin then "osx" else stdenv.hostPlatform.parsed.kernel.name; 
+          arch = if stdenv.hostPlatform.is64bit then "amd64" else if stdenv.hostPlatform.isAarch64 then "aarch64" else "i386";
           newFileEvents = toString (lib.versionAtLeast version "8.12");
         in
         ''
@@ -128,7 +129,7 @@ rec {
           nativeVersion="$(extractVersion native-platform $out/lib/gradle/lib/native-platform-*.jar)"
           for variant in "" "-ncurses5" "-ncurses6"; do
             autoPatchelfInJar \
-              $out/lib/gradle/lib/native-platform-linux-${arch}$variant-''${nativeVersion}.jar \
+              $out/lib/gradle/lib/native-platform-${os}-${arch}$variant-''${nativeVersion}.jar \
               "${lib.getLib stdenv.cc.cc}/lib64:${
                 lib.makeLibraryPath [
                   stdenv.cc.cc
