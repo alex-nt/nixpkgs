@@ -2,15 +2,17 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  python3,
+  python311,
   makeDesktopItem,
   copyDesktopItems,
   desktopToDarwinBundle,
 }:
 
-with python3.pkgs;
-
-buildPythonApplication rec {
+let
+  python3 = python311;
+in
+  with python3.pkgs; 
+  buildPythonApplication rec {
   pname = "thonny";
   version = "4.1.7";
 
